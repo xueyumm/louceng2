@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="jquery-2.2.3.min.js"></script>
+  <style type="text/css">
+       *{
+        margin: 0;
+        padding: 0;
+       }
+        ul li{
+          list-style-type: none;
+        }
+        header{
+          width: 100%;
+          height: 80px;
+          background:#ccc;
+          position: fixed;
+          top: 0;
+          left: 0;
+          text-align: center;
+        }
+
+      .content div{
+        width:100%;
+        height: 600px;
+        text-align: center;
+        line-height: 600px;
+        font-size: 30px;
+      }
+      .div1{
+        background: white;
+      }
+      .div2{
+        background: blue;
+      }
+      .div3{
+        background: red;
+
+      }
+      .div4{
+        background: yellow;
+      }
+      .div5{
+        background: green;
+      }
+    ul {
+      position: fixed;
+      left: 0;
+      top:160px;
+    }
+    li{
+      width: 80px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+     border: 1px solid #ddd;
+    }
+    li a{
+      text-decoration: none;
+      color: #000;
+
+    }
+   .actived{
+    background: purple!important;
+   }
+
+  </style>
+</head>
+<body>
+    <header></header>
+    <ul class="nav">
+      <li class="actived"><a href="javascript:;">1楼</a></li>
+      <li><a href="javascript:;">2楼</a></li>
+      <li><a href="javascript:;">3楼</a></li>
+      <li><a href="javascript:;">4楼</a></li>
+      <li><a href="javascript:;">5楼</a></li>
+      <li class="backTop"><a href="javascript:;">backTop</a></li>
+    </ul>
+  
+    <div class="content">
+      <div class="div1 model">1</div>
+      <div class="div2 model">2</div>
+      <div class="div3 model">3</div>
+      <div class="div4 model">4</div>
+      <div class="div5 model">5</div>
+     </div>
+
+   <script type="text/javascript">
+
+   var aDiv=$(".model");
+   var aNav=$(".nav li")
+    
+     $("header").hide();
+     $(".backTop").hide();
+
+
+    $(".backTop").click(function(e){
+       e.preventDefault();
+       $('html, body').animate({scrollTop: 0}, 800);
+    })
+
+
+     //鼠标滚动
+      $(window).scroll(function(){
+         
+        if($(window).scrollTop()>=600){
+            $("header").slideDown(500); 
+            $(".backTop").fadeIn(500);
+        }else{
+        
+            $("header").slideUp(500); 
+            $(".backTop").fadeOut(500);
+        } 
+
+
+         var winH = $(window).height();//可视窗口高度
+         var iTop = $(window).scrollTop();//鼠标滚动的距离
+  
+           //鼠标滑动式改变  
+           aDiv.each(function(i){
+              // console.log(i+"offset().top"+$(this).offset().top);
+              // console.log(i+"scrollTop()"+$(this).scrollTop());
+              // console.log(iTop);
+              
+              var  oTop=winH+iTop - $(this).offset().top
+              if(oTop>winH/2){
+                aNav.removeClass('actived');
+                aNav.eq($(this).index()).addClass('actived');
+              }
+            })
+      })
+
+      //导航点击
+      aNav.click(function(){
+        var t = aDiv.eq($(this).index()).offset().top;
+        $('body,html').animate({"scrollTop":t},500);
+        $(this).addClass('active').siblings().removeClass('active');
+
+      });
+
+
+
+
+
+   </script> 
+
+</body>
+</html>
